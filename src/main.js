@@ -9,9 +9,19 @@ document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 function addLoading() {
   const h2 = document.createElement('h2');
+
   h2.className = 'loading';
   h2.innerHTML = 'carregando...';
   productsArea.appendChild(h2);
+}
+
+function addErrorMessage(p) {
+  const h2 = document.createElement('h2');
+  if (p === 'error') {
+    h2.className = 'error';
+    h2.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
+    productsArea.appendChild(h2);
+  }
 }
 
 function hideLoading() {
@@ -20,9 +30,14 @@ function hideLoading() {
 
 async function addItems() {
   addLoading();
-  const products = await fetchProductsList('computador');
-  products.map((product) => productsArea.appendChild(createProductElement(product)));
-  hideLoading();
+  try {
+    const products = await fetchProductsList('computador');
+    products.map((product) => productsArea.appendChild(createProductElement(product)));
+    hideLoading();
+  } catch (e) {
+    hideLoading();
+    addErrorMessage('error');
+  }
 }
 
 window.onload = () => {
