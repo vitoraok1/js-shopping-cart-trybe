@@ -1,5 +1,13 @@
 import { removeCartID } from './cartFunctions';
 
+const totalValue = document.querySelector('.total-price');
+let sumValue = 0;
+
+function sumItems(price) {
+  sumValue += price;
+  totalValue.innerHTML = sumValue.toFixed(2);
+}
+
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 
@@ -45,9 +53,10 @@ export const getIdFromProduct = (product) => (
  * @param {Element} li - Elemento do produto a ser removido do carrinho.
  * @param {string} id - ID do produto a ser removido do carrinho.
  */
-const removeCartProduct = (li, id) => {
+const removeCartProduct = (li, id, price) => {
   li.remove();
   removeCartID(id);
+  sumItems(-price);
 };
 
 /**
@@ -60,6 +69,7 @@ const removeCartProduct = (li, id) => {
  * @returns {Element} Elemento de um product do carrinho.
  */
 export const createCartProductElement = ({ id, title, price, pictures }) => {
+  sumItems(price);
   const li = document.createElement('li');
   li.className = 'cart__product';
   const imgContainer = createCustomElement('div', 'cart__product__image-container');
@@ -87,7 +97,7 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   );
   li.appendChild(removeButton);
 
-  li.addEventListener('click', () => removeCartProduct(li, id));
+  li.addEventListener('click', () => removeCartProduct(li, id, price));
   return li;
 };
 
