@@ -6,6 +6,11 @@
     <br/>
      <br/>
      <br/>
+    
+
+https://github.com/vitoraok1/js-shopping-cart-trybe/assets/112435823/0f634318-e124-4391-be57-b7d5a5c856f8
+
+  <br/>
   </p>
 </p>
 
